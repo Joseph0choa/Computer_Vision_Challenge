@@ -67,12 +67,18 @@ Follow these steps to set up and run the project locally:
 
 # 1. Clone the repository
 git clone https://github.com/Joseph0choa/Computer_Vision_Challenge
-cd computer-vision-challenge
+cd Computer_Vision_Challenge
 
 # 2. Create a virtual environment
 python -m venv venv
 
 # 3. Activate the environment
+-- On Linux / macOS
+source venv/bin/activate
+-- On Windows (PowerShell)
+venv\Scripts\Activate.ps1
+-- On Windows (Command Prompt)
+venv\Scripts\activate.bat
 
 # 4. Install dependencies
 python -m pip install --upgrade pip

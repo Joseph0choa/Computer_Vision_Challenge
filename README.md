@@ -1,66 +1,89 @@
-Table Detection Challenge Solution
-This repository contains two computer vision solutions for automatically detecting and highlighting table structures in different interface screenshots:
+# Table Detection Challenge Solution
 
-SAP Table Detector - Specialized for SAP interface screenshots
-WEB Table Detector - Optimized for web interface tables
-Both solutions leverage a prototype-based approach where the algorithm first learns from a prototype image before applying detection to actual screenshots.
+This repository contains two computer vision solutions for **automatically detecting and highlighting table structures** in different interface screenshots:
 
-Overview
+- **SAP Table Detector** → Specialized for SAP interface screenshots  
+- **WEB Table Detector** → Optimized for web interface tables  
+
+Both solutions use a **prototype-based approach**:  
+The algorithm first learns from a prototype image (to understand row heights and structure) before applying detection to actual screenshots.
+
+---
+
+##  Overview
 The challenge involved creating computer vision algorithms that can:
 
-Identify table structures in interface screenshots
-Distinguish between header rows and body rows
-Visualize the detected structures with clear highlighting
-Handle different table layouts and screen resolutions
-SAP Table Detector
-The SAP_Table_Detector.ipynb notebook provides a solution specialized for SAP interface tables.
+- Identify table structures in interface screenshots  
+- Distinguish between **header rows** and **body rows**  
+- Visualize the detected structures with clear highlighting  
+- Handle different table layouts and screen resolutions  
 
-Approach:
-Prototype Analysis:
+---
 
-Analyzes a prototype SAP table image to learn the expected row height
-Uses contour detection and statistical mode to identify the most common row height
-Table Detection:
+##  SAP Table Detector
+ Notebook: `SAP_Table_Detector.ipynb`  
 
-Identifies the main table area by finding large rectangular contours with specific aspect ratios
-Extracts horizontal lines using morphological operations and Hough line detection
-Separates header from body rows based on spacing patterns
-Highlights the table structure with colored rectangles:
-Table frame (red)
-Header (green)
-Body rows (yellow)
-Vertical Line Detection:
+### Approach:
+- **Prototype Analysis** → Analyzes a prototype SAP table image to learn the expected row height, using contour detection and statistical mode.  
+- **Table Detection** → Identifies the main table area, extracts horizontal lines, separates header and body rows, and highlights with colors:  
+  - 🟥 Table frame (**red**)  
+  - 🟩 Header (**green**)  
+  - 🟨 Body rows (**yellow**)  
+  - ⬛ Column separators(**black**)
 
-Identifies column separators using vertical line detection
-WEB Table Detector
-The WEB_Table_Detector.ipynb notebook provides a solution optimized for web-based tables.
+---
 
-Approach:
-Prototype Analysis:
+##  WEB Table Detector
+ Notebook: `WEB_Table_Detector.ipynb`  
 
-Learns both header height and average body row height from a prototype image
-Records the prototype dimensions for scaling calculations
-Adaptive Detection:
+### Approach:
+- **Prototype Analysis** → Learns both header height and average row height from a prototype.  
+- **Adaptive Detection** → Scales measurements to different resolutions, clusters row patterns, and filters noisy lines.  
+- **Table Structure Recognition** → Finds consistent body rows, locates header by position, calculates horizontal boundaries, and visualizes with:  
+  - 🟥 Table frame (**red**)  
+  - 🟩 Header (**green**)  
+  - 🟨 Body rows (**yellow**)  
 
-Scales measurements based on screen dimensions to handle different resolutions
-Uses clustering algorithms to identify consistent row patterns
-Employs filtering techniques to clean up detected lines
-Table Structure Recognition:
+---
 
-First identifies the body rows as the main cluster of consistent lines
-Then attempts to locate the header based on expected positioning
-Uses percentiles to determine table boundaries horizontally
-Visualizes results with colored rectangles:
-Table frame (red)
-Header (green)
-Body rows (yellow)
-Technologies Used
-Python with OpenCV for image processing
-NumPy for numerical operations
-Matplotlib for visualization
-Computer vision techniques including:
-Thresholding
-Morphological operations
-Contour detection
-Hough line detection
-Connected component analysis
+## Technologies Used
+- **Python 3.9+**  
+- **OpenCV** → image processing  
+- **NumPy** → numerical operations  
+- **Matplotlib** → visualization  
+
+### Computer Vision Techniques
+- Thresholding  
+- Morphological operations  
+- Contour detection  
+- Hough line detection  
+- Connected component analysis  
+
+---
+
+## Installation & Setup
+
+Follow these steps to set up and run the project locally:
+
+# 1. Clone the repository
+git clone https://github.com/your-username/table-detection-challenge.git
+cd table-detection-challenge
+
+# 2. Create a virtual environment
+python -m venv venv
+
+# 3. Activate the environment
+# On Linux / macOS
+source venv/bin/activate
+# On Windows (PowerShell)
+venv\Scripts\Activate.ps1
+# On Windows (Command Prompt)
+venv\Scripts\activate.bat
+
+# (Alternative: with conda)
+# conda create -n table-detector python=3.9
+# conda activate table-detector
+
+# 4. Install dependencies
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt

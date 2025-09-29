@@ -66,23 +66,13 @@ The challenge involved creating computer vision algorithms that can:
 Follow these steps to set up and run the project locally:
 
 # 1. Clone the repository
-git clone https://github.com/your-username/table-detection-challenge.git
-cd table-detection-challenge
+git clone https://github.com/Joseph0choa/Computer_Vision_Challenge
+cd computer-vision-challenge
 
 # 2. Create a virtual environment
 python -m venv venv
 
 # 3. Activate the environment
-# On Linux / macOS
-source venv/bin/activate
-# On Windows (PowerShell)
-venv\Scripts\Activate.ps1
-# On Windows (Command Prompt)
-venv\Scripts\activate.bat
-
-# (Alternative: with conda)
-# conda create -n table-detector python=3.9
-# conda activate table-detector
 
 # 4. Install dependencies
 python -m pip install --upgrade pip

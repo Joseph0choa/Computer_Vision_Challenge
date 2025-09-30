@@ -1,85 +1,100 @@
-# Table Detection Challenge Solution
+# Table Structure Detection
 
-This repository contains two computer vision solutions for **automatically detecting and highlighting table structures** in different interface screenshots:
+This project provides a computer vision solution for automatically detecting and visualizing table structures in interface screenshots. The algorithm uses prototype images to learn table dimensions and then applies this knowledge to identify tables in actual screenshots.
 
-- **SAP Table Detector** → Specialized for SAP interface screenshots  
-- **WEB Table Detector** → Optimized for web interface tables  
+## Features
 
-Both solutions use a **prototype-based approach**:  
-The algorithm first learns from a prototype image (to understand row heights and structure) before applying detection to actual screenshots.
+- **Prototype-based Learning**: Analyzes prototype images to understand table structure parameters
+- **Automatic Table Detection**: Identifies tables in various interface screenshots
+- **Structural Elements Recognition**:
+  - Header rows detection
+  - Table rows detection
+  - Column separators detection
+- **Visual Output**: Generates color-coded visualizations with:
+  - 🟥 Table boundaries (red)
+  - 🟩 Header rows (green)
+  - 🟨 Data rows (yellow)
+  - ⬛ Column separators (black)
 
----
+## How It Works
 
-##  Overview
-The challenge involved creating computer vision algorithms that can:
+The solution works in two main phases:
 
-- Identify table structures in interface screenshots  
-- Distinguish between **header rows** and **body rows**  
-- Visualize the detected structures with clear highlighting  
-- Handle different table layouts and screen resolutions  
+### 1. Prototype Analysis
+- Detects horizontal lines in a prototype image using Hough Line Transform
+- Filters detected lines to remove noise and duplicates
+- Calculates the header height (largest distance between lines)
+- Determines the standard row height (second largest distance)
 
----
+### 2. Table Structure Detection
+- Analyzes screenshot images to find vertical lines defining table boundaries
+- Applies scaling to handle different screen resolutions
+- Creates a visual representation of the detected table structure with:
+  - Table frame outlined in red
+  - Header section highlighted in green
+  - Data rows marked in yellow
+  - Column separators in black
 
-##  SAP Table Detector
- Notebook: `SAP_Table_Detector.ipynb`  
+## Technical Approach
 
-### Approach:
-- **Prototype Analysis** → Analyzes a prototype SAP table image to learn the expected row height, using contour detection and statistical mode.  
-- **Table Detection** → Identifies the main table area, extracts horizontal lines, separates header and body rows, and highlights with colors:  
-  - 🟥 Table frame (**red**)  
-  - 🟩 Header (**green**)  
-  - 🟨 Body rows (**yellow**)  
-  - ⬛ Column separators(**black**)
+### Image Processing Pipeline
+1. **Pre-processing**:
+   - Convert images to grayscale
+   - Apply binary thresholding to isolate table structures
+   - Use morphological operations to enhance features
 
----
+2. **Line Detection**:
+   - Use Hough Line Transform with optimized parameters
+   - Filter lines based on orientation (horizontal/vertical)
+   - Sort and group lines to identify structural elements
 
-##  WEB Table Detector
- Notebook: `WEB_Table_Detector.ipynb`  
+3. **Structure Recognition**:
+   - Identify table boundaries from vertical lines
+   - Apply prototype-based measurements to reconstruct row structure
+   - Scale measurements based on screen resolution differences
 
-### Approach:
-- **Prototype Analysis** → Learns both header height and average row height from a prototype.  
-- **Adaptive Detection** → Scales measurements to different resolutions, clusters row patterns, and filters noisy lines.  
-- **Table Structure Recognition** → Finds consistent body rows, locates header by position, calculates horizontal boundaries, and visualizes with:  
-  - 🟥 Table frame (**red**)  
-  - 🟩 Header (**green**)  
-  - 🟨 Body rows (**yellow**)  
-
----
+4. **Visualization**:
+   - Generate color-coded output with different structural elements
 
 ## Technologies Used
-- **Python 3.9+**  
-- **OpenCV** → image processing  
-- **NumPy** → numerical operations  
-- **Matplotlib** → visualization  
 
-### Computer Vision Techniques
-- Thresholding  
-- Morphological operations  
-- Contour detection  
-- Hough line detection  
-- Connected component analysis  
+- **Python 3.8+**
+- **OpenCV 4.8.1**: For all image processing and computer vision operations
+- **NumPy 1.24.3**: For numerical operations and array manipulation
+- **Matplotlib 3.7.2**: For visualization of results
 
----
+## Computer Vision Techniques
 
-## Installation & Setup
+- **Thresholding**: To isolate table structures from backgrounds
+- **Morphological Operations**: To enhance line structures
+- **Hough Line Transform**: To detect straight lines in images
+- **Spatial Filtering**: To remove noise and duplicate detections
+- **Contour Analysis**: For structure boundary detection
 
-Follow these steps to set up and run the project locally:
+## Installation
 
-# 1. Clone the repository
+```bash
+# Clone the repository
 git clone https://github.com/Joseph0choa/Computer_Vision_Challenge
 cd Computer_Vision_Challenge
 
-# 2. Create a virtual environment
+# Create and activate virtual environment (optional but recommended)
 python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 
-# 3. Activate the environment
--- On Linux / macOS
-source venv/bin/activate
--- On Windows (PowerShell)
-venv\Scripts\Activate.ps1
--- On Windows (Command Prompt)
-venv\Scripts\activate.bat
+# Install dependencies
+pip install -r requirements.txt
+```
 
-# 4. Install dependencies
-python -m pip install --upgrade pip
-python -m pip install -r requirements.txt
+## Usage
+
+1. **Prepare Files**:
+   - Place prototype images in the project directory (named `prototype_SAP.png`, `prototype_WEB.png`, etc.)
+   - Place target screenshots in the project directory (named `SAP.png`, `WEB.png`, etc.)
+
+2. **Run Detection**:
+   - Open and execute the Jupyter Notebook `Table_detector.ipynb`
+
+3. **View Results**:
+   - The notebook will display visualizations of detected table structures
+   - Results show table boundaries, headers, and rows with different colors
